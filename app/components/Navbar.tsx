@@ -29,15 +29,17 @@ export default function Navbar() {
       {isActive && (
         <div className="bg-stone-100 text-gray-800 w-44 absolute top-16 right-4 p-3 rounded-lg shadow-lg">
           <ul className="font-normal">
-            <div className="flex items-center">
-              <LuArrowRight className="mr-1" />
-              <li className="py-2">Dashboard</li>
-            </div>
-            <div className="flex items-center">
+            <Link href="/dashboard" onClick={toggleMenu}>
+              <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
+                <LuArrowRight className="mr-1" />
+                <li className="py-2">Dashboard</li>
+              </div>
+            </Link>
+            <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
               <LuArrowRight className="mr-1" />
               <li className="py-2">Settings</li>
             </div>{" "}
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
               <LuArrowRight className="mr-1" />
               <li className="py-2">Sign Out</li>
             </div>
