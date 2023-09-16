@@ -20,6 +20,9 @@ export default function RootLayout({
       <body className={mont.className}>
         <Navbar />
         {children}
+        <footer className="text-center text-white py-2 bg-gradient-to-r from-slate-900 to-slate-700 text-sm">
+          <p>© 2023 RoomBalloon. All rights reserved.</p>
+        </footer>
       </body>
     </html>
   )
