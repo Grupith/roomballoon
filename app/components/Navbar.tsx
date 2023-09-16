@@ -35,14 +35,18 @@ export default function Navbar() {
                 <li className="py-2">Dashboard</li>
               </div>
             </Link>
-            <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
-              <LuArrowRight className="mr-1" />
-              <li className="py-2">Settings</li>
-            </div>{" "}
-            <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
-              <LuArrowRight className="mr-1" />
-              <li className="py-2">Sign Out</li>
-            </div>
+            <Link href="/settings" onClick={toggleMenu}>
+              <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
+                <LuArrowRight className="mr-1" />
+                <li className="py-2">Settings</li>
+              </div>
+            </Link>
+            <Link href="/" onClick={toggleMenu}>
+              <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
+                <LuArrowRight className="mr-1" />
+                <li className="py-2">Sign Out</li>
+              </div>
+            </Link>
           </ul>
         </div>
       )}

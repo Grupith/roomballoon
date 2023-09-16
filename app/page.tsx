@@ -7,7 +7,7 @@ export default function Home() {
         <h2 className="text-4xl md:text-5xl text-center text-white font-bold">
           Elevate your Roommate Experiance
         </h2>
-        <h3 className="text-white font-normal text-lg md:text-xl mt-5 text-center px-2 md:px-0">
+        <h3 className="text-gray-300 font-normal text-lg md:text-xl mt-5 text-center px-2 md:px-0">
           Organize Rent Payments, Groceries, Tasks and More!
         </h3>
       </div>
