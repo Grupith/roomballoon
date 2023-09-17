@@ -32,11 +32,24 @@ export default function Navbar() {
           <Image src={logo} alt="Balloon Logo" height={35} width={35} />
           <h1 className="font-semibold">RoomBalloon</h1>
         </Link>
-        <div
-          onClick={toggleMenu}
-          className="cursor-pointer transition-all relative"
-        >
-          {!isActive ? <LuMenu size="25" /> : <LuAlignCenter size="25" />}
+        <div className="flex items-center">
+          {user ? (
+            <Image
+              src={user?.photoURL as string}
+              width={30}
+              height={30}
+              className="rounded-full cursor-pointer"
+              alt="Profile Photo"
+              onClick={toggleMenu}
+            />
+          ) : (
+            <div
+              onClick={toggleMenu}
+              className="cursor-pointer transition-all relative"
+            >
+              {!isActive ? <LuMenu size="25" /> : <LuAlignCenter size="25" />}
+            </div>
+          )}
         </div>
       </div>
       {isActive && (
@@ -45,13 +58,21 @@ export default function Navbar() {
             <Link href="/dashboard" onClick={toggleMenu}>
               <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
                 <LuArrowRight className="mr-1" />
-                <li className="py-2">Dashboard</li>
+                {user ? (
+                  <li className="py-2">Dashboard</li>
+                ) : (
+                  <li className="py-2 line-through">Dashboard</li>
+                )}
               </div>
             </Link>
             <Link href="/settings" onClick={toggleMenu}>
               <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
                 <LuArrowRight className="mr-1" />
-                <li className="py-2">Settings</li>
+                {user ? (
+                  <li className="py-2">Settings</li>
+                ) : (
+                  <li className="py-2 line-through">Settings</li>
+                )}
               </div>
             </Link>
 
