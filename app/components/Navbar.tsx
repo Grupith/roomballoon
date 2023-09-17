@@ -4,14 +4,23 @@ import React, { useState } from "react"
 import { LuMenu, LuArrowRight, LuAlignCenter } from "react-icons/lu"
 import logo from "../favicon.ico"
 import Image from "next/image"
+import { useFirebase } from "../FirebaseContext"
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
   const [isActive, setIsActive] = useState(false)
+  const { signOut } = useFirebase()
+  const router = useRouter()
 
   const toggleMenu = () => {
     setIsActive(!isActive)
   }
 
+  const handleSignOut = () => {
+    signOut()
+    router.push("/")
+    toggleMenu()
+  }
   return (
     <nav className="fixed w-full top-0 text-white pt-1">
       <div className="flex justify-between mx-4 sm:justify-around text-xl py-3 ">
@@ -35,18 +44,20 @@ export default function Navbar() {
                 <li className="py-2">Dashboard</li>
               </div>
             </Link>
-            <Link href="/settings" onClick={toggleMenu}>
+            <Link href="/settings">
               <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
                 <LuArrowRight className="mr-1" />
                 <li className="py-2">Settings</li>
               </div>
             </Link>
-            <Link href="/" onClick={toggleMenu}>
-              <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
-                <LuArrowRight className="mr-1" />
-                <li className="py-2">Sign Out</li>
-              </div>
-            </Link>
+
+            <div
+              onClick={handleSignOut}
+              className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md"
+            >
+              <LuArrowRight className="mr-1" />
+              <li className="py-2">Sign Out</li>
+            </div>
           </ul>
         </div>
       )}

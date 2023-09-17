@@ -1,6 +1,23 @@
+"use client"
 import Image from "next/image"
+import { useFirebase } from "./FirebaseContext"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Home() {
+  const router = useRouter()
+  const { signInWithGoogle, user } = useFirebase()
+
+  const handleSignIn = () => {
+    signInWithGoogle()
+  }
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard")
+    }
+  }, [user])
+
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700">
       <div className="flex flex-col justify-center items-center pt-32 md:pt-60">
@@ -15,7 +32,10 @@ export default function Home() {
         <h4 className="text-white text-2xl font-normal">
           Join our Beta Today!
         </h4>
-        <button className="text-white border border-white py-1 px-3 rounded-md mt-4 shadow-lg hover:bg-gray-700">
+        <button
+          onClick={handleSignIn}
+          className="text-white border border-white py-1 px-3 rounded-md mt-4 shadow-lg hover:bg-gray-700"
+        >
           Sign in with Google
         </button>
       </div>
