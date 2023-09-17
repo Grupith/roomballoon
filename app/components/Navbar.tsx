@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { LuMenu, LuArrowRight, LuAlignCenter } from "react-icons/lu"
 import logo from "../favicon.ico"
 import Image from "next/image"
@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isActive, setIsActive] = useState(false)
   const { signOut, user } = useFirebase()
   const router = useRouter()
+  const menuRef = useRef(null)
 
   const toggleMenu = () => {
     setIsActive(!isActive)
@@ -25,6 +26,25 @@ export default function Navbar() {
     }
     toggleMenu()
   }
+
+  // Close nav menu when user clicks outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isActive &&
+        menuRef.current &&
+        !(menuRef.current as HTMLElement).contains(event.target as Node)
+      ) {
+        setIsActive(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside)
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [isActive])
+
   return (
     <nav className="fixed w-full top-0 text-white pt-1">
       <div className="flex justify-between mx-4 sm:justify-around text-xl py-3 ">
@@ -52,8 +72,12 @@ export default function Navbar() {
           )}
         </div>
       </div>
+      {/* Nav Menu Container */}
       {isActive && (
-        <div className="bg-stone-100 text-gray-800 w-44 absolute top-16 right-4 p-3 rounded-lg shadow-lg">
+        <div
+          ref={menuRef}
+          className="bg-stone-100 text-gray-800 w-44 absolute top-16 right-4 p-3 rounded-lg shadow-lg"
+        >
           <ul className="font-normal">
             <Link href="/dashboard" onClick={toggleMenu}>
               <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
