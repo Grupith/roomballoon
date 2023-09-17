@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 
 export default function Navbar() {
   const [isActive, setIsActive] = useState(false)
-  const { signOut } = useFirebase()
+  const { signOut, user } = useFirebase()
   const router = useRouter()
 
   const toggleMenu = () => {
@@ -17,8 +17,12 @@ export default function Navbar() {
   }
 
   const handleSignOut = () => {
-    signOut()
-    router.push("/")
+    if (user) {
+      signOut()
+      router.push("/")
+    } else {
+      console.log("user not signed in")
+    }
     toggleMenu()
   }
   return (
@@ -44,7 +48,7 @@ export default function Navbar() {
                 <li className="py-2">Dashboard</li>
               </div>
             </Link>
-            <Link href="/settings">
+            <Link href="/settings" onClick={toggleMenu}>
               <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
                 <LuArrowRight className="mr-1" />
                 <li className="py-2">Settings</li>
@@ -56,7 +60,11 @@ export default function Navbar() {
               className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md"
             >
               <LuArrowRight className="mr-1" />
-              <li className="py-2">Sign Out</li>
+              {user ? (
+                <li className="py-2">Sign Out</li>
+              ) : (
+                <li className="py-2 line-through">Sign Out</li>
+              )}
             </div>
           </ul>
         </div>
