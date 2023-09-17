@@ -16,7 +16,7 @@ export default function Home() {
     if (user) {
       router.push("/dashboard")
     }
-  }, [user])
+  }, [user, router])
 
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700">
