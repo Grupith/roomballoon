@@ -1,8 +1,9 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { User, GoogleAuthProvider, signInWithRedirect } from "firebase/auth"
-import { auth } from "./firebase"
+import { auth, db } from "./firebase"
 import { useRouter } from "next/navigation"
+import { doc, getDoc, setDoc } from "firebase/firestore"
 
 interface AuthContextProps {
   user: User | null
@@ -28,6 +29,25 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser)
+        // Check if the user document exists in database
+        const CheckUserExists = async () => {
+          const userDocRef = doc(db, "users", authUser.uid)
+          const userDocSnapshot = await getDoc(userDocRef)
+
+          if (!userDocSnapshot.exists()) {
+            // If doc does not exist, create one
+            await setDoc(userDocRef, {
+              name: authUser.displayName,
+              email: authUser.email,
+              uid: authUser.uid,
+            })
+            console.log("Added user to the database")
+          } else {
+            console.log("User already exists in database")
+          }
+        }
+
+        CheckUserExists()
       } else {
         setUser(null)
       }

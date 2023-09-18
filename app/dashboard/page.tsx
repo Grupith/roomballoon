@@ -11,9 +11,6 @@ export default function Dashboard() {
         <h1 className="text-white text-center text-2xl font-semibold pt-2">
           Dashboard
         </h1>
-        <h2 className="text-center pt-10 text-xl text-white">
-          Welcome {user?.displayName}!
-        </h2>
       </main>
     </ProtectedPage>
   )
