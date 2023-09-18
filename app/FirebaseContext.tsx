@@ -34,8 +34,8 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
           const userDocRef = doc(db, "users", authUser.uid)
           const userDocSnapshot = await getDoc(userDocRef)
 
+          // If doc does not exist, create one in users collection
           if (!userDocSnapshot.exists()) {
-            // If doc does not exist, create one
             await setDoc(userDocRef, {
               name: authUser.displayName,
               email: authUser.email,
@@ -46,7 +46,6 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
             console.log("User already exists in database")
           }
         }
-
         CheckUserExists()
       } else {
         setUser(null)
