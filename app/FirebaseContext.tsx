@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react"
 import { User, GoogleAuthProvider, signInWithRedirect } from "firebase/auth"
 import { auth, db } from "./firebase"
 import { useRouter } from "next/navigation"
-import { doc, getDoc, setDoc } from "firebase/firestore"
+import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore"
 
 interface AuthContextProps {
   user: User | null
@@ -40,6 +40,7 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
               name: authUser.displayName,
               email: authUser.email,
               uid: authUser.uid,
+              created_at: Timestamp.now(),
             })
             console.log("Added user to the database")
           } else {

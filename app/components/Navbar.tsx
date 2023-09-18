@@ -77,6 +77,9 @@ export default function Navbar() {
           <Link href="/dashboard" className="transition-all hover:font-normal">
             Dashboard
           </Link>
+          <Link href="/household" className="transition-all hover:font-normal">
+            Household
+          </Link>
           <Link href="/settings" className="transition-all hover:font-normal">
             Settings
           </Link>
@@ -106,6 +109,16 @@ export default function Navbar() {
                   <li className="py-2">Dashboard</li>
                 ) : (
                   <li className="py-2 line-through">Dashboard</li>
+                )}
+              </div>
+            </Link>
+            <Link href="/household" onClick={toggleMenu}>
+              <div className="flex items-center cursor-pointer px-1 hover:bg-gray-300 rounded-md">
+                <LuArrowRight className="mr-1" />
+                {user ? (
+                  <li className="py-2">Household</li>
+                ) : (
+                  <li className="py-2 line-through">HouseHold</li>
                 )}
               </div>
             </Link>
