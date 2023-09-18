@@ -22,7 +22,7 @@ export default function Home() {
     <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700">
       <div className="flex flex-col justify-center items-center pt-32 md:pt-60">
         <h2 className="text-4xl md:text-5xl text-center text-white font-bold">
-          Elevate your Roommate Experiance
+          Elevate your Roommate Experience
         </h2>
         <h3 className="text-gray-300 font-normal text-lg md:text-xl mt-5 text-center px-2 md:px-0">
           Organize Rent Payments, Groceries, Tasks and More!

@@ -24,7 +24,7 @@ export default function Navbar() {
     } else {
       console.log("user not signed in")
     }
-    toggleMenu()
+    setIsActive(false)
   }
 
   // Close nav menu when user clicks outside
@@ -47,12 +47,14 @@ export default function Navbar() {
 
   return (
     <nav className="fixed w-full top-0 text-white pt-1">
-      <div className="flex justify-between mx-4 sm:justify-around text-xl py-3 ">
+      <div className="flex justify-between mx-4 text-xl py-3 ">
+        {/* Logo and Title */}
         <Link href="/" className="flex items-center">
           <Image src={logo} alt="Balloon Logo" height={35} width={35} />
           <h1 className="font-semibold">RoomBalloon</h1>
         </Link>
-        <div className="flex items-center">
+        {/* Mobile Menu Icon */}
+        <div className="flex items-center sm:hidden">
           {user ? (
             <Image
               src={user?.photoURL as string}
@@ -71,8 +73,26 @@ export default function Navbar() {
             </div>
           )}
         </div>
+        <ul className="hidden sm:flex items-center space-x-6 text-lg font-light">
+          <Link href="/dashboard" className="transition-all hover:font-normal">
+            Dashboard
+          </Link>
+          <Link href="/settings" className="transition-all hover:font-normal">
+            Settings
+          </Link>
+          <div
+            onClick={handleSignOut}
+            className="cursor-pointer transition-all hover:font-normal"
+          >
+            {user ? (
+              <li className="py-2">Sign Out</li>
+            ) : (
+              <li className="py-2 line-through">Sign Out</li>
+            )}
+          </div>
+        </ul>
       </div>
-      {/* Nav Menu Container */}
+      {/* Mobile Nav Menu Container */}
       {isActive && (
         <div
           ref={menuRef}
