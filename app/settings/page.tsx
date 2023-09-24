@@ -23,6 +23,19 @@ export default function Settings() {
             <div className="truncate">{user?.email}</div>
           </div>
         </div>
+        <div className="bg-gradient-to-r from-stone-200 to-stone-300 rounded-lg mx-4 mt-6 p-4">
+          <p className="text-xl text-center pb-4">HouseHold Settings</p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="text-gray-600">Household Name:</div>
+            <div>"household Name"</div>
+
+            <div className="text-gray-600">Household Nickname:</div>
+            <div className="truncate">"household Nickname"</div>
+
+            <div className="text-gray-600">Household Role:</div>
+            <div className="truncate">"household Role"</div>
+          </div>
+        </div>
       </main>
     </ProtectedPage>
   )

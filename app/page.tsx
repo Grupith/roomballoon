@@ -12,12 +12,6 @@ export default function Home() {
     signInWithGoogle()
   }
 
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard")
-    }
-  }, [user, router])
-
   return (
     <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700">
       <div className="flex flex-col justify-center items-center pt-32 md:pt-60">
