@@ -2,7 +2,6 @@
 import Link from "next/link"
 import React, { useState, useRef, useEffect } from "react"
 import { LuMenu, LuArrowRight, LuAlignCenter } from "react-icons/lu"
-import logo from "../favicon.ico"
 import Image from "next/image"
 import { useFirebase } from "../FirebaseContext"
 import { useRouter } from "next/navigation"
@@ -50,7 +49,12 @@ export default function Navbar() {
       <div className="flex justify-between mx-4 text-xl py-3 ">
         {/* Logo and Title */}
         <Link href="/" className="flex items-center">
-          <Image src={logo} alt="Balloon Logo" height={35} width={35} />
+          <Image
+            src="/assets/balloonlogo.png"
+            alt="Balloon Logo"
+            height={35}
+            width={35}
+          />
           <h1 className="font-semibold">RoomBalloon</h1>
         </Link>
         {/* Mobile Menu Icon */}

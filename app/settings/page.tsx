@@ -27,13 +27,13 @@ export default function Settings() {
           <p className="text-xl text-center pb-4">HouseHold Settings</p>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-gray-600">Household Name:</div>
-            <div>"household Name"</div>
+            <div>household-name</div>
 
             <div className="text-gray-600">Household Nickname:</div>
-            <div className="truncate">"household Nickname"</div>
+            <div className="truncate">household-nickname</div>
 
             <div className="text-gray-600">Household Role:</div>
-            <div className="truncate">"household Role"</div>
+            <div className="truncate">household-role</div>
           </div>
         </div>
       </main>
