@@ -1,0 +1,64 @@
+{
+  "pages": {
+    "/page": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/bc9e92e6-3c5b1a2922317b56.js",
+      "static/chunks/82deed28-51a085f290479473.js",
+      "static/chunks/316-9e4989121869c117.js",
+      "static/chunks/app/page-8c2a7f31916a7aff.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/bc9e92e6-3c5b1a2922317b56.js",
+      "static/chunks/82deed28-51a085f290479473.js",
+      "static/chunks/737dfa3e-3b76ebe12f2d4ced.js",
+      "static/chunks/316-9e4989121869c117.js",
+      "static/chunks/60-dd2379789addc59c.js",
+      "static/css/6a7b6e575f3b16bc.css",
+      "static/chunks/app/layout-8690858f51ab0a76.js"
+    ],
+    "/loading": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/app/loading-e72eff2fe194de03.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/bc9e92e6-3c5b1a2922317b56.js",
+      "static/chunks/82deed28-51a085f290479473.js",
+      "static/chunks/316-9e4989121869c117.js",
+      "static/chunks/app/dashboard/page-18a9e5a5fe80494b.js"
+    ],
+    "/household/page": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/bc9e92e6-3c5b1a2922317b56.js",
+      "static/chunks/82deed28-51a085f290479473.js",
+      "static/chunks/316-9e4989121869c117.js",
+      "static/chunks/app/household/page-601c99dbb5216437.js"
+    ],
+    "/settings/page": [
+      "static/chunks/webpack-31cf3c527dfe5dd9.js",
+      "static/chunks/fd9d1056-3c3605bc8d8428a6.js",
+      "static/chunks/596-df5363086751fdcd.js",
+      "static/chunks/main-app-cb1d1b89e3142ef2.js",
+      "static/chunks/bc9e92e6-3c5b1a2922317b56.js",
+      "static/chunks/82deed28-51a085f290479473.js",
+      "static/chunks/316-9e4989121869c117.js",
+      "static/chunks/app/settings/page-413d391a1f479bea.js"
+    ]
+  }
+}
