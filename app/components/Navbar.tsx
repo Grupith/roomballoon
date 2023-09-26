@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* Logo and Title */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/assets/balloonlogo.png"
+            src="/balloonlogo.png"
             alt="Balloon Logo"
             height={35}
             width={35}
