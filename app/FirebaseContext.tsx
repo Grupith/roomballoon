@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { User, GoogleAuthProvider, signInWithRedirect } from "firebase/auth"
+import { User, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth, db } from "./firebase"
 import { useRouter } from "next/navigation"
 import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore"
@@ -59,7 +59,7 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider()
     try {
-      await signInWithRedirect(auth, provider)
+      await signInWithPopup(auth, provider)
     } catch (error) {
       console.error("Google Sign in Error", error)
     }
