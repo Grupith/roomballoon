@@ -63,6 +63,7 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error("Google Sign in Error", error)
     }
+    router.push("/dashboard")
   }
 
   const signOut = async () => {

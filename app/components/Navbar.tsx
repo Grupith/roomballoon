@@ -67,6 +67,7 @@ export default function Navbar() {
               className="rounded-full cursor-pointer"
               alt="Profile Photo"
               onClick={toggleMenu}
+              priority
             />
           ) : (
             <div
