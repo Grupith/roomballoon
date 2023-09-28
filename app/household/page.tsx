@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"
 import ProtectedPage from "../ProtectedPage"
 import CreateHousehold from "../components/CreateHousehold"
-import JoinHousehold from "../components/JoinHouseHold"
+import JoinHousehold from "../components/JoinHousehold"
 import { doc, getDoc } from "firebase/firestore"
 import { useFirebase } from "../FirebaseContext"
 import { db } from "../firebase"
@@ -37,19 +37,23 @@ export default function HouseHold() {
             const householdDocRef = doc(db, "households", householdId)
             const householdDocSnap = await getDoc(householdDocRef)
 
-            if (householdDocSnap.exists()) {
-              const householdData = householdDocSnap.data() as Data
-              setData(householdData)
-              console.log("household name:", householdData.householdName)
-            }
-
-            // If the user does not have a household, show the CreateHousehold and JoinHousehold components
             if (!householdId) {
               setShowCreateHousehold(true)
               setShowJoinHousehold(true)
+              setIsLoading(false) // Set isLoading to false immediately
+            } else {
+              // Fetch the household data using the householdId
+              const householdDocRef = doc(db, "households", householdId)
+              const householdDocSnap = await getDoc(householdDocRef)
+
+              if (householdDocSnap.exists()) {
+                const householdData = householdDocSnap.data() as Data
+                setData(householdData)
+                console.log("household name:", householdData.householdName)
+              }
             }
 
-            setIsLoading(false)
+            setIsLoading(false) // Set isLoading to false when the data is fetched
           }
         } catch (error) {
           console.error("Error fetching user data:", error)
@@ -77,15 +81,20 @@ export default function HouseHold() {
               </span>
             </div>
           </div>
-        ) : userHouseholdId ? (
-          <h1 className="text-white text-center text-2xl font-semibold py-2">
-            {data?.householdName}
-          </h1>
         ) : (
-          <div>
-            {showCreateHousehold && <CreateHousehold />}
-            {showJoinHousehold && <JoinHousehold />}
-          </div>
+          <>
+            {!userHouseholdId && (
+              <>
+                <CreateHousehold />
+                <JoinHousehold />
+              </>
+            )}
+            {userHouseholdId && data && (
+              <h1 className="text-white text-center text-2xl font-semibold py-2">
+                {data.householdName}
+              </h1>
+            )}
+          </>
         )}
       </main>
     </ProtectedPage>
