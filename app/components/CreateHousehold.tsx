@@ -2,7 +2,7 @@ import React from "react"
 
 export default function CreateHousehold() {
   return (
-    <div className="bg-white/90 rounded-lg shadow-lg p-6 mx-4 mt-4 md:mx-auto md:max-w-md">
+    <div className="bg-gray-200 rounded-lg shadow-lg p-6 mx-4 mt-4 md:mx-auto md:max-w-md">
       <h2 className="text-3xl font-semibold text-gray-800 mb-6">
         Create Household
       </h2>
