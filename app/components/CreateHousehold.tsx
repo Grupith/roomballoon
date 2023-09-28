@@ -1,12 +1,57 @@
-import React from "react"
+import {
+  addDoc,
+  collection,
+  doc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore"
+import React, { useState } from "react"
+import { db } from "../firebase"
+import { useFirebase } from "../FirebaseContext"
 
 export default function CreateHousehold() {
+  const [householdName, setHouseholdName] = useState("")
+  const [nickname, setNickname] = useState("")
+  const { user } = useFirebase()
+
+  // Add household document to households collection
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+
+    try {
+      const docRef = await addDoc(collection(db, "households"), {
+        householdName: householdName,
+        created_at: Timestamp.now(),
+        created_by: user?.email,
+      })
+      if (user) {
+        await updateUserDoc(user?.uid, docRef.id)
+      }
+      console.log("Successfully Created Household", householdName)
+    } catch (error) {
+      console.log("Error creating household", error)
+    }
+  }
+
+  // Update users document with householdId
+  const updateUserDoc = async (userId: string, householdId: string) => {
+    try {
+      const userDocRef = doc(db, "users", userId)
+      await updateDoc(userDocRef, {
+        householdId: householdId,
+      })
+      console.log("User updated with householdId:", householdId)
+    } catch (error) {
+      console.log("Error updating user with householdId:", error)
+    }
+  }
+
   return (
     <div className="bg-gray-200 rounded-lg shadow-lg p-6 mx-4 mt-4 md:mx-auto md:max-w-md">
       <h2 className="text-3xl font-semibold text-gray-800 mb-6">
         Create Household
       </h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
             htmlFor="householdName"
@@ -23,6 +68,8 @@ export default function CreateHousehold() {
             name="householdName"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter HouseHold Name"
+            onChange={(e) => setHouseholdName(e.target.value)}
+            required
           />
         </div>
         <div className="mb-4">
@@ -42,6 +89,8 @@ export default function CreateHousehold() {
             name="nickname"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter Your Nickname"
+            onChange={(e) => setNickname(e.target.value)}
+            required
           />
         </div>
         <div className="text-center">

@@ -41,10 +41,9 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
               email: authUser.email,
               uid: authUser.uid,
               created_at: Timestamp.now(),
+              householdId: "",
             })
             console.log("Added user to the database")
-          } else {
-            console.log("User already exists in database")
           }
         }
         CheckUserExists()

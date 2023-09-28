@@ -1,9 +1,7 @@
 "use client"
 import { useFirebase } from "./FirebaseContext"
-import { useRouter } from "next/navigation"
 
 export default function Home() {
-  const router = useRouter()
   const { signInWithGoogle } = useFirebase()
 
   const handleSignIn = () => {
