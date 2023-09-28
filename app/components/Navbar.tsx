@@ -5,12 +5,14 @@ import { LuMenu, LuArrowRight, LuAlignCenter } from "react-icons/lu"
 import Image from "next/image"
 import { useFirebase } from "../FirebaseContext"
 import { useRouter } from "next/navigation"
+import Alert from "./Alert"
 
 export default function Navbar() {
   const [isActive, setIsActive] = useState(false)
   const { signOut, user } = useFirebase()
   const router = useRouter()
   const menuRef = useRef(null)
+  const [signOutAlert, setSignOutAlert] = useState(false)
 
   const toggleMenu = () => {
     setIsActive(!isActive)
@@ -19,6 +21,8 @@ export default function Navbar() {
   const handleSignOut = () => {
     if (user) {
       signOut()
+      setSignOutAlert(true)
+      sessionStorage.removeItem("alertShown")
       router.push("/")
     } else {
       console.log("user not signed in")
@@ -100,6 +104,8 @@ export default function Navbar() {
           </div>
         </ul>
       </div>
+      {/* Sign Out Alert */}
+      {signOutAlert && <Alert type="info">Signed Out Successfully!</Alert>}
       {/* Mobile Nav Menu Container */}
       {isActive && (
         <div

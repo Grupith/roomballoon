@@ -13,7 +13,7 @@ export default function Settings() {
         <h1 className="text-white text-center text-2xl font-semibold pt-2">
           Settings
         </h1>
-        <div className="bg-gradient-to-r from-stone-200 to-stone-300 rounded-lg mx-4 mt-6 p-4">
+        <div className="bg-gradient-to-r from-stone-200 to-stone-300 rounded-lg mx-4 mt-6 p-4 md:mx-auto md:max-w-md">
           <p className="text-xl text-center pb-4">Account Information</p>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-gray-600">Display Name:</div>
@@ -23,7 +23,7 @@ export default function Settings() {
             <div className="truncate">{user?.email}</div>
           </div>
         </div>
-        <div className="bg-gradient-to-r from-stone-200 to-stone-300 rounded-lg mx-4 mt-6 p-4">
+        <div className="bg-gradient-to-r from-stone-200 to-stone-300 rounded-lg mx-4 mt-6 p-4  md:mx-auto md:max-w-md">
           <p className="text-xl text-center pb-4">HouseHold Settings</p>
           <div className="grid grid-cols-2 gap-2">
             <div className="text-gray-600">Household Name:</div>
