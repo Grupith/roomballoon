@@ -9,11 +9,19 @@ import {
 import React, { useState } from "react"
 import { db } from "../firebase"
 import { useFirebase } from "../FirebaseContext"
+import { useRouter } from "next/navigation"
 
-export default function CreateHousehold() {
+interface CreateHouseholdProps {
+  onUpdateHouseholdId: (householdId: string) => void
+}
+
+export default function CreateHousehold({
+  onUpdateHouseholdId,
+}: CreateHouseholdProps) {
   const [householdName, setHouseholdName] = useState("")
   const [nickname, setNickname] = useState("")
   const { user } = useFirebase()
+  const router = useRouter()
 
   // Add household document to households collection
   const handleSubmit = async (e: any) => {
@@ -23,10 +31,21 @@ export default function CreateHousehold() {
       const docRef = await addDoc(collection(db, "households"), {
         householdName: householdName,
         created_at: Timestamp.now(),
-        created_by: user?.email,
+        created_by: user?.uid,
+        members: [
+          {
+            name: user?.displayName,
+            uid: user?.uid,
+            nickname: nickname,
+            role: "owner",
+          },
+          // Add other members if needed
+        ],
       })
       if (user) {
         await updateUserDoc(user?.uid, docRef.id)
+        // Update userHouseholdId state in parent household component
+        onUpdateHouseholdId(docRef.id)
       }
       console.log("Successfully Created Household", householdName)
     } catch (error) {

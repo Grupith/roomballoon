@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react"
 import ProtectedPage from "../ProtectedPage"
 import CreateHousehold from "../components/CreateHousehold"
-import JoinHousehold from "../components/JoinHousehold"
 import { doc, getDoc } from "firebase/firestore"
 import { useFirebase } from "../FirebaseContext"
 import { db } from "../firebase"
@@ -20,6 +19,7 @@ export default function HouseHold() {
   const [data, setData] = useState<Data | undefined>(undefined)
 
   useEffect(() => {
+    console.log("Fetching user houshold data on /household")
     const fetchUserHouseholdData = async () => {
       if (user) {
         const userDocRef = doc(db, "users", user.uid)
@@ -62,10 +62,14 @@ export default function HouseHold() {
       }
     }
 
-    if (user) {
+    if (user || userHouseholdId) {
       fetchUserHouseholdData()
     }
-  }, [user])
+  }, [user, userHouseholdId])
+
+  const updateUserHouseholdId = (householdId: string) => {
+    setUserHouseholdId(householdId)
+  }
 
   return (
     <ProtectedPage>
@@ -85,8 +89,7 @@ export default function HouseHold() {
           <>
             {!userHouseholdId && (
               <>
-                <CreateHousehold />
-                <JoinHousehold />
+                <CreateHousehold onUpdateHouseholdId={updateUserHouseholdId} />
               </>
             )}
             {userHouseholdId && data && (
