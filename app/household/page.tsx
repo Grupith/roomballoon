@@ -5,6 +5,7 @@ import CreateHousehold from "../components/CreateHousehold"
 import { doc, getDoc } from "firebase/firestore"
 import { useFirebase } from "../FirebaseContext"
 import { db } from "../firebase"
+import Alert from "../components/Alert"
 
 interface Data {
   householdName: string
@@ -17,6 +18,8 @@ export default function HouseHold() {
   const [showCreateHousehold, setShowCreateHousehold] = useState(false)
   const [showJoinHousehold, setShowJoinHousehold] = useState(false)
   const [data, setData] = useState<Data | undefined>(undefined)
+  const [createHouseholdAlert, setCreateHouseholdAlert] =
+    useState<boolean>(false)
 
   useEffect(() => {
     console.log("Fetching user houshold data on /household")
@@ -71,9 +74,23 @@ export default function HouseHold() {
     setUserHouseholdId(householdId)
   }
 
+  // Using a timeout to clear the alert after 3 seconds
+  useEffect(() => {
+    if (createHouseholdAlert) {
+      const timeoutId = setTimeout(() => {
+        setCreateHouseholdAlert(false)
+      }, 4000)
+
+      return () => clearTimeout(timeoutId) // Clear the timeout if the component unmounts
+    }
+  }, [createHouseholdAlert])
+
   return (
     <ProtectedPage>
       <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700 pt-16">
+        {createHouseholdAlert && (
+          <Alert type="success">Successfully created household </Alert>
+        )}
         {isLoading ? (
           <div className="flex justify-center">
             <div
@@ -89,7 +106,10 @@ export default function HouseHold() {
           <>
             {!userHouseholdId && (
               <>
-                <CreateHousehold onUpdateHouseholdId={updateUserHouseholdId} />
+                <CreateHousehold
+                  onUpdateHouseholdId={updateUserHouseholdId}
+                  setCreateHouseholdAlert={setCreateHouseholdAlert}
+                />
               </>
             )}
             {userHouseholdId && data && (

@@ -6,22 +6,23 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore"
-import React, { useState } from "react"
+import React, { useState, Dispatch, SetStateAction } from "react"
 import { db } from "../firebase"
 import { useFirebase } from "../FirebaseContext"
-import { useRouter } from "next/navigation"
+import Alert from "./Alert"
 
 interface CreateHouseholdProps {
   onUpdateHouseholdId: (householdId: string) => void
+  setCreateHouseholdAlert: Dispatch<SetStateAction<boolean>>
 }
 
 export default function CreateHousehold({
   onUpdateHouseholdId,
+  setCreateHouseholdAlert,
 }: CreateHouseholdProps) {
   const [householdName, setHouseholdName] = useState("")
   const [nickname, setNickname] = useState("")
   const { user } = useFirebase()
-  const router = useRouter()
 
   // Add household document to households collection
   const handleSubmit = async (e: any) => {
@@ -43,11 +44,12 @@ export default function CreateHousehold({
         ],
       })
       if (user) {
+        setCreateHouseholdAlert(true)
         await updateUserDoc(user?.uid, docRef.id)
         // Update userHouseholdId state in parent household component
         onUpdateHouseholdId(docRef.id)
       }
-      console.log("Successfully Created Household", householdName)
+      console.log("Successfully created household", householdName)
     } catch (error) {
       console.log("Error creating household", error)
     }
@@ -60,7 +62,6 @@ export default function CreateHousehold({
       await updateDoc(userDocRef, {
         householdId: householdId,
       })
-      console.log("User updated with householdId:", householdId)
     } catch (error) {
       console.log("Error updating user with householdId:", error)
     }
