@@ -128,48 +128,79 @@ export default function Settings() {
           <Alert type="success">Household was deleted Successfully</Alert>
         )}
         <div className=" bg-gray-200 rounded-lg mx-4 mt-6 p-4 md:mx-auto md:max-w-md">
-          <p className="text-xl text-center pb-4">My Account</p>
+          <p className="text-xl text-center pb-4 font-semibold">My Account</p>
           <div className="grid grid-cols-2 gap-2 text-md">
             <div className="text-gray-600">Display Name:</div>
-            <div className="font-semibold">{user?.displayName}</div>
+            <div className="font-normal">{user?.displayName}</div>
 
             <div className="text-gray-600">Email:</div>
-            <div className="truncate font-semibold">{user?.email}</div>
+            <div className="truncate font-normal">{user?.email}</div>
           </div>
         </div>
-        <div className="bg-gray-200 rounded-lg mx-4 mt-6 p-4  md:mx-auto md:max-w-md">
-          <p className="text-xl text-center pb-4">My HouseHold</p>
-          <div className="grid grid-cols-2 gap-2 text-md">
-            <div className="text-gray-600">Household Name:</div>
-            <div>{householdData && householdData.householdName}</div>
-
-            <div className="text-gray-600">Household Id:</div>
-            <div className="truncate">{householdDocId && householdDocId}</div>
-
-            <div className="text-gray-600">Household Nickname:</div>
-            <div className="truncate">
-              {householdData && findUserNickname(user?.uid, householdData)}
+        <div className="bg-gray-200 p-6 mx-4 mt-6 rounded-lg shadow-md md:mx-auto md:max-w-md">
+          <div className="bg-gray-100 p-4 rounded-lg mb-6">
+            <p className="text-xl text-center font-semibold pb-4">
+              My Household
+            </p>
+            <div className="mb-4">
+              <span className="text-gray-600">Household Name: </span>
+              <span>{householdData && householdData.householdName}</span>
             </div>
-
-            <div className="text-gray-600">Household Role:</div>
-            <div className="truncate">
-              {householdData && findUserRole(user?.uid, householdData)}
+            <div className="mb-4">
+              <span className="text-gray-600">Household Id: </span>
+              <span className="truncate">
+                {householdDocId && householdDocId}
+              </span>
             </div>
-
-            {isOwner ? (
-              <div>
-                <div className="text-gray-600">Delete HouseHold:</div>
-                <button
-                  onClick={handleDeleteHousehold}
-                  className="bg-red-500 hover:bg-red-600 transition-all text-white font-semibold text-sm py-2 px-2 mt-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
-                >
-                  Delete HouseHold
-                </button>
-              </div>
-            ) : (
-              <div></div>
-            )}
+            <div className="mb-4">
+              <span className="text-gray-600">Household Nickname: </span>
+              <span className="truncate">
+                {householdData && findUserNickname(user?.uid, householdData)}
+              </span>
+            </div>
+            <div className="mb-4">
+              <span className="text-gray-600">Household Role: </span>
+              <span className="truncate">
+                {householdData && findUserRole(user?.uid, householdData)}
+              </span>
+            </div>
           </div>
+
+          <section className="space-y-6">
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <p className="font-semibold text-lg mb-2 text-center">
+                Invite Members
+              </p>
+              <p className="text-gray-600 text-center mb-4">
+                Invite people to the household by sending them the household
+                code.
+              </p>
+              <div className="text-center text-xl mb-4 font-mono font-bold">
+                {householdDocId && householdDocId}
+              </div>
+              <button className="bg-blue-500 hover:bg-blue-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-400">
+                Copy Code
+              </button>
+            </div>
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <p className="font-semibold text-lg mb-2 text-center">
+                Delete Household
+              </p>
+              <p className="text-gray-600 text-center mb-4">
+                This deletes the household and all the data inside.
+              </p>
+              {isOwner && (
+                <div className="mb-6 text-center">
+                  <button
+                    onClick={handleDeleteHousehold}
+                    className="bg-red-500 hover:bg-red-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                  >
+                    Delete Household
+                  </button>
+                </div>
+              )}
+            </div>
+          </section>
         </div>
       </main>
     </ProtectedPage>
