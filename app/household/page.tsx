@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore"
 import { useFirebase } from "../FirebaseContext"
 import { db } from "../firebase"
 import Alert from "../components/Alert"
+import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs"
 
 interface Data {
   householdName: string
@@ -127,19 +128,25 @@ export default function HouseHold() {
                   {data.householdName}
                 </h1>
                 <div className="bg-gray-200 rounded-lg mx-4 mt-6 p-4 md:mx-auto md:max-w-md">
-                  <h2 className="text-xl font-semibold mb-4">Members</h2>
+                  <div className="flex items-center space-x-2 mb-4">
+                    <BsPeopleFill className="text-2xl" />
+                    <h2 className="text-xl font-semibold">Members</h2>
+                  </div>
                   <div className="grid gap-4">
                     {data.members.map((member, index) => (
                       <div
                         key={index}
                         className="bg-white p-4 rounded-lg shadow-lg"
                       >
-                        <p className="text-xl font-semibold">{member.name}</p>
+                        <div className="flex items-center space-x-1">
+                          <BsFillPersonFill className="text-2xl text-blue-600" />
+                          <p className="text-xl font-semibold">{member.name}</p>
+                        </div>
                         <p className="font-normal text-gray-700 text-lg">
                           Nickname: {member.nickname}
                         </p>
-                        <p className="text-gray-700 text-lg">
-                          Role: {member.role}
+                        <p className="text-white text-md font-normal bg-blue-500 rounded-full w-fit px-3">
+                          {member.role}
                         </p>
                       </div>
                     ))}

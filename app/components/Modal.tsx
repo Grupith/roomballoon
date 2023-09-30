@@ -30,7 +30,7 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onConfirm}
             className="bg-red-500 hover:bg-red-600 transition-all text-white font-semibold text-sm py-2 px-2 mt-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
           >
-            Yes, I'm sure
+            Yes, I&apos;m sure
           </button>
         </div>
       </div>
