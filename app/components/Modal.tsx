@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
-        className="bg-gray-100 rounded p-5"
+        className="bg-gray-100 rounded-lg p-5"
       >
         <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
         <div className="text-md">{children}</div>

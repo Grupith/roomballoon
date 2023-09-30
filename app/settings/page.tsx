@@ -14,6 +14,7 @@ interface HouseholdData {
   created_by: string
   members: {
     uid: string
+    name: string
     nickname: string
     role: string
     // Add other member fields as needed
@@ -155,74 +156,103 @@ export default function Settings() {
             <div className="truncate font-normal">{user?.email}</div>
           </div>
         </div>
-        <div className="bg-gray-200 p-6 mx-4 mt-6 rounded-lg shadow-md md:mx-auto md:max-w-md">
-          <div className="bg-gray-100 p-4 rounded-lg mb-6">
-            <p className="text-xl text-center font-semibold pb-4">
-              My Household
-            </p>
-            <div className="mb-4">
-              <span className="text-gray-600">Household Name: </span>
-              <span>{householdData && householdData.householdName}</span>
-            </div>
-            <div className="mb-4">
-              <span className="text-gray-600">Household Id: </span>
-              <span className="truncate">
-                {householdDocId && householdDocId}
-              </span>
-            </div>
-            <div className="mb-4">
-              <span className="text-gray-600">Household Nickname: </span>
-              <span className="truncate">
-                {householdData && findUserNickname(user?.uid, householdData)}
-              </span>
-            </div>
-            <div className="mb-4">
-              <span className="text-gray-600">Household Role: </span>
-              <span className="truncate">
-                {householdData && findUserRole(user?.uid, householdData)}
-              </span>
-            </div>
-          </div>
-
-          <section className="space-y-6">
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <p className="font-semibold text-lg mb-2 text-center">
-                Invite Members
+        {householdData && (
+          <div className="bg-gray-200 p-6 mx-4 mt-6 rounded-lg shadow-md md:mx-auto md:max-w-md">
+            <div className="bg-gray-100 p-4 rounded-lg mb-6">
+              <p className="text-xl text-center font-semibold pb-4">
+                My Household
               </p>
-              <p className="text-gray-600 text-center mb-4">
-                Invite people to the household by sending them the household
-                code.
-              </p>
-              <div className="text-center text-xl mb-4 font-mono font-bold">
-                {householdDocId && householdDocId}
+              <div className="mb-4">
+                <span className="text-gray-600">Household Name: </span>
+                <span>{householdData.householdName}</span>
               </div>
-              <button
-                onClick={handleCopyCode}
-                className="bg-blue-500 hover:bg-blue-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-400"
-              >
-                Copy Code
-              </button>
+              <div className="mb-4">
+                <span className="text-gray-600">Household Id: </span>
+                <span className="truncate">
+                  {householdDocId && householdDocId}
+                </span>
+              </div>
+              <div className="mb-4">
+                <span className="text-gray-600">Household Nickname: </span>
+                <span className="truncate">
+                  {householdData && findUserNickname(user?.uid, householdData)}
+                </span>
+              </div>
+              <div className="mb-4">
+                <span className="text-gray-600">Household Role: </span>
+                <span className="truncate">
+                  {householdData && findUserRole(user?.uid, householdData)}
+                </span>
+              </div>
             </div>
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <p className="font-semibold text-lg mb-2 text-center">
-                Delete Household
-              </p>
-              <p className="text-gray-600 text-center mb-4">
-                This deletes the household and all the data inside.
-              </p>
-              {isOwner && (
-                <div className="mb-6 text-center">
-                  <button
-                    onClick={handleDeleteHousehold}
-                    className="bg-red-500 hover:bg-red-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                  >
-                    Delete Household
-                  </button>
+
+            <section className="space-y-6">
+              {/* Invite Members */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <p className="font-semibold text-lg mb-2 text-center">
+                  Invite Members
+                </p>
+                <p className="text-gray-600 text-center mb-4">
+                  Invite people to the household by sending them the household
+                  code.
+                </p>
+                <div className="text-center text-xl mb-4 font-mono font-bold">
+                  {householdDocId && householdDocId}
                 </div>
-              )}
-            </div>
-          </section>
-        </div>
+                <button
+                  onClick={handleCopyCode}
+                  className="bg-blue-500 hover:bg-blue-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+                  Copy Code
+                </button>
+              </div>
+              {/* Members Card */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <p className="font-semibold text-lg mb-2 text-center">
+                  Members
+                </p>
+                <p className="text-gray-600 text-center mb-4">
+                  The members currently in your household.
+                </p>
+                <div>
+                  {householdData.members.map((member, index) => (
+                    <div
+                      key={index}
+                      className="bg-white p-4 rounded-lg shadow-lg space-y-1"
+                    >
+                      <p className="text-xl font-semibold">{member.name}</p>
+                      <p className="font-normal text-gray-700 text-md">
+                        Nickname: {member.nickname}
+                      </p>
+                      <p className="text-white text-sm font-normal bg-blue-500 rounded-full w-fit px-3">
+                        {member.role}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Delete Household Card */}
+              <div className="bg-gray-100 p-4 rounded-lg">
+                <p className="font-semibold text-lg mb-2 text-center">
+                  Delete Household
+                </p>
+                <p className="text-gray-600 text-center mb-4">
+                  This deletes the household and all the data inside.
+                </p>
+                {isOwner && (
+                  <div className="mb-6 text-center">
+                    <button
+                      onClick={handleDeleteHousehold}
+                      className="bg-red-500 hover:bg-red-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                    >
+                      Delete Household
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        )}
       </main>
     </ProtectedPage>
   )

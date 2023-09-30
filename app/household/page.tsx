@@ -136,7 +136,7 @@ export default function HouseHold() {
                     {data.members.map((member, index) => (
                       <div
                         key={index}
-                        className="bg-white p-4 rounded-lg shadow-lg"
+                        className="bg-white p-4 rounded-lg shadow-lg space-y-1"
                       >
                         <div className="flex items-center space-x-1">
                           <BsFillPersonFill className="text-2xl text-blue-600" />

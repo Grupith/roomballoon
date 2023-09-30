@@ -38,7 +38,7 @@ export default function CreateHousehold({
             name: user?.displayName,
             uid: user?.uid,
             nickname: nickname,
-            role: "owner",
+            role: "Owner",
           },
           // Add other members if needed
         ],
