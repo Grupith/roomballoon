@@ -6,6 +6,7 @@ import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import Alert from "../components/Alert"
 import { useRouter } from "next/navigation"
+import Modal from "../components/Modal"
 
 interface HouseholdData {
   householdName: string
@@ -26,6 +27,7 @@ export default function Settings() {
   const [isOwner, setIsOwner] = useState(false)
   const [deleteHouseholdAlert, setDeleteHouseholdAlert] = useState(false)
   const router = useRouter()
+  const [showModal, setShowModal] = useState(false)
 
   const fetchHouseholdData = async () => {
     if (user) {
@@ -61,6 +63,10 @@ export default function Settings() {
   }, [user])
 
   const handleDeleteHousehold = async () => {
+    setShowModal(true)
+  }
+
+  const confirmDeleteHousehold = async () => {
     if (user && householdDocId) {
       try {
         // Check if user is owner before deletion
@@ -70,6 +76,7 @@ export default function Settings() {
           await updateDoc(userDocRef, { householdId: "" })
 
           setDeleteHouseholdAlert(true)
+          setShowModal(false)
 
           // Refresh household data
           setHouseholdData(null)
@@ -107,6 +114,15 @@ export default function Settings() {
         <h1 className="text-white text-center text-2xl font-semibold pt-2">
           Settings
         </h1>
+        <Modal
+          show={showModal}
+          title="Delete Household"
+          onClose={() => setShowModal(false)}
+          onConfirm={confirmDeleteHousehold}
+        >
+          {" "}
+          Are you sure you want to delete this household?
+        </Modal>
         {deleteHouseholdAlert && (
           <Alert type="success">Household was deleted Successfully</Alert>
         )}

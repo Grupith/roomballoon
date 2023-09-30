@@ -127,9 +127,7 @@ export default function HouseHold() {
                   {data.householdName}
                 </h1>
                 <div className="bg-gray-200 rounded-lg mx-4 mt-6 p-4 md:mx-auto md:max-w-md">
-                  <h2 className="text-xl font-semibold mb-4">
-                    Household Members
-                  </h2>
+                  <h2 className="text-xl font-semibold mb-4">Members</h2>
                   <div className="grid gap-4">
                     {data.members.map((member, index) => (
                       <div
