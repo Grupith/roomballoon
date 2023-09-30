@@ -28,6 +28,7 @@ export default function Settings() {
   const [deleteHouseholdAlert, setDeleteHouseholdAlert] = useState(false)
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
+  const [copyCodeAlert, setCopyCodeAlert] = useState(false)
 
   const fetchHouseholdData = async () => {
     if (user) {
@@ -108,6 +109,22 @@ export default function Settings() {
     return member ? member.role : ""
   }
 
+  const handleCopyCode = async () => {
+    if (householdDocId) {
+      try {
+        await navigator.clipboard.writeText(householdDocId)
+        setCopyCodeAlert(true)
+        console.log("Code copied to clipboard")
+        // Set a timeout to reset the alert state after 3 seconds
+        setTimeout(() => {
+          setCopyCodeAlert(false)
+        }, 3000)
+      } catch (error) {
+        console.error("Failed to copy code", error)
+      }
+    }
+  }
+
   return (
     <ProtectedPage>
       <main className="min-h-screen overflow-hidden bg-gradient-to-r from-slate-900 to-slate-700 pt-16">
@@ -124,6 +141,7 @@ export default function Settings() {
           {" "}
           Are you sure you want to delete this household?
         </Modal>
+        {copyCodeAlert && <Alert type="info">Code copied to clipboard</Alert>}
         {deleteHouseholdAlert && (
           <Alert type="success">Household was deleted Successfully</Alert>
         )}
@@ -178,7 +196,10 @@ export default function Settings() {
               <div className="text-center text-xl mb-4 font-mono font-bold">
                 {householdDocId && householdDocId}
               </div>
-              <button className="bg-blue-500 hover:bg-blue-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <button
+                onClick={handleCopyCode}
+                className="bg-blue-500 hover:bg-blue-600 transition-all text-white font-semibold text-sm py-2 px-4 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
                 Copy Code
               </button>
             </div>
