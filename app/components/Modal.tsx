@@ -1,4 +1,5 @@
 import React from "react"
+import { motion } from "framer-motion"
 
 interface ModalProps {
   show: boolean
@@ -19,7 +20,12 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-black z-50">
-      <div className="bg-gray-100 rounded p-5">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="bg-gray-100 rounded p-5"
+      >
         <h2 className="text-xl font-bold mb-4 text-center">{title}</h2>
         <div className="text-md">{children}</div>
         <div className="mt-4 space-x-4 flex justify-center">
@@ -33,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
             Yes, I&apos;m sure
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -114,6 +114,7 @@ export default function Settings() {
         <h1 className="text-white text-center text-2xl font-semibold pt-2">
           Settings
         </h1>
+
         <Modal
           show={showModal}
           title="Delete Household"
