@@ -9,6 +9,15 @@ import Alert from "../components/Alert"
 
 interface Data {
   householdName: string
+  householdId: string
+  created_by: string
+  members: {
+    uid: string
+    name: string
+    nickname: string
+    role: string
+    // Add other member fields as needed
+  }[]
 }
 
 export default function HouseHold() {
@@ -113,9 +122,32 @@ export default function HouseHold() {
               </>
             )}
             {userHouseholdId && data && (
-              <h1 className="text-white text-center text-2xl font-semibold py-2">
-                {data.householdName}
-              </h1>
+              <>
+                <h1 className="text-white text-center text-2xl font-semibold py-2">
+                  {data.householdName}
+                </h1>
+                <div className="bg-gray-200 rounded-lg mx-4 mt-6 p-4 md:mx-auto md:max-w-md">
+                  <h2 className="text-xl font-semibold mb-4">
+                    Household Members
+                  </h2>
+                  <div className="grid gap-4">
+                    {data.members.map((member, index) => (
+                      <div
+                        key={index}
+                        className="bg-white p-4 rounded-lg shadow-lg"
+                      >
+                        <p className="text-xl font-semibold">{member.name}</p>
+                        <p className="font-normal text-gray-700 text-lg">
+                          Nickname: {member.nickname}
+                        </p>
+                        <p className="text-gray-700 text-lg">
+                          Role: {member.role}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
             )}
           </>
         )}
