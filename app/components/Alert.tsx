@@ -26,7 +26,7 @@ const Alert: React.FC<AlertProps> = ({ children, type }) => {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
-          className={`fixed top-0 left-0 right-0 p-4 mx-4 mt-4 rounded-lg shadow-md text-white ${
+          className={`fixed top-0 left-0 right-0 p-4 mx-4 mt-4 rounded-lg shadow-md text-white md:mx-auto md:max-w-md ${
             type === "success"
               ? "bg-green-500"
               : type === "warning"
