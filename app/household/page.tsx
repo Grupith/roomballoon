@@ -27,56 +27,56 @@ export default function HouseHold() {
   const { user } = useFirebase()
   const [userHouseholdId, setUserHouseholdId] = useState("")
   const [isLoading, setIsLoading] = useState(true)
-  const [showCreateHousehold, setShowCreateHousehold] = useState(false)
-  const [showJoinHousehold, setShowJoinHousehold] = useState(false)
   const [data, setData] = useState<Data | undefined>(undefined)
   const [createHouseholdAlert, setCreateHouseholdAlert] =
     useState<boolean>(false)
 
   useEffect(() => {
-    console.log("Fetching user houshold data on /household")
-    const fetchUserHouseholdData = async () => {
+    const fetchUserHouseholdId = async () => {
+      setIsLoading(true)
       if (user) {
-        const userDocRef = doc(db, "users", user.uid)
-
         try {
+          const userDocRef = doc(db, "users", user.uid)
           const userDocSnap = await getDoc(userDocRef)
-
           if (userDocSnap.exists()) {
             const userData = userDocSnap.data()
             const householdId = userData?.householdId || ""
-
             setUserHouseholdId(householdId)
-
-            if (!householdId) {
-              setShowCreateHousehold(true)
-              setShowJoinHousehold(true)
-              setIsLoading(false) // Set isLoading to false immediately
-            } else {
-              // Fetch the household data using the householdId
-              const householdDocRef = doc(db, "households", householdId)
-              const householdDocSnap = await getDoc(householdDocRef)
-
-              if (householdDocSnap.exists()) {
-                const householdData = householdDocSnap.data() as Data
-                setData(householdData)
-                console.log("household name:", householdData.householdName)
-              }
-            }
-
-            setIsLoading(false) // Set isLoading to false when the data is fetched
           }
         } catch (error) {
           console.error("Error fetching user data:", error)
-          setIsLoading(false)
         }
+        setIsLoading(false)
       }
     }
 
-    if (user || userHouseholdId) {
-      fetchUserHouseholdData()
+    fetchUserHouseholdId()
+  }, [user])
+
+  useEffect(() => {
+    const fetchHouseholdData = async () => {
+      setIsLoading(true)
+      if (userHouseholdId) {
+        try {
+          const householdDocRef = doc(db, "households", userHouseholdId)
+          const householdDocSnap = await getDoc(householdDocRef)
+          if (householdDocSnap.exists()) {
+            const householdData = householdDocSnap.data() as Data
+            setData(householdData)
+            console.log(
+              "Fetched household data from",
+              householdData.householdName
+            )
+          }
+        } catch (error) {
+          console.error("Error fetching household data:", error)
+        }
+        setIsLoading(false) // Set isLoading to false when the data is fetched
+      }
     }
-  }, [user, userHouseholdId])
+
+    fetchHouseholdData()
+  }, [userHouseholdId])
 
   const updateUserHouseholdId = (householdId: string) => {
     setUserHouseholdId(householdId)

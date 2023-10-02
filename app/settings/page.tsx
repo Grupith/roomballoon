@@ -5,7 +5,6 @@ import ProtectedPage from "../ProtectedPage"
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase"
 import Alert from "../components/Alert"
-import { useRouter } from "next/navigation"
 import Modal from "../components/Modal"
 
 interface HouseholdData {
@@ -28,42 +27,54 @@ export default function Settings() {
   const [householdDocId, setHouseholdDocId] = useState<string | null>(null)
   const [isOwner, setIsOwner] = useState(false)
   const [deleteHouseholdAlert, setDeleteHouseholdAlert] = useState(false)
-  const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const [copyCodeAlert, setCopyCodeAlert] = useState(false)
-
-  const fetchHouseholdData = async () => {
-    if (user) {
-      // Fetch the users document from users collection
-      const userDocRef = doc(db, "users", user.uid)
-      try {
-        const userDocSnap = await getDoc(userDocRef)
-        if (userDocSnap.exists()) {
-          const userData = userDocSnap.data()
-          const householdId = userData.householdId
-
-          if (householdId) {
-            const householdDocRef = doc(db, "households", householdId)
-            const householdDocSnap = await getDoc(householdDocRef)
-
-            if (householdDocSnap.exists()) {
-              const data = householdDocSnap.data() as HouseholdData
-              setHouseholdData(data)
-              setHouseholdDocId(householdDocSnap.id)
-              setIsOwner(data.created_by === user.uid)
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching household Data", error)
-      }
-    }
-  }
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log("Fetching household data...")
-    fetchHouseholdData()
+    const fetchUserData = async () => {
+      if (user) {
+        try {
+          console.log("Fetching user data on /settings")
+          const userDocRef = doc(db, "users", user.uid)
+          const userDocSnap = await getDoc(userDocRef)
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data()
+            const householdId = userData.householdId
+            if (householdId) {
+              setHouseholdDocId(householdId) // <-- set householdDocId for the next effect to use
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user data", error)
+        }
+        setLoading(false)
+      }
+    }
+
+    fetchUserData()
   }, [user])
+
+  useEffect(() => {
+    const fetchHouseholdData = async () => {
+      if (householdDocId) {
+        try {
+          console.log("Fetching household data on /settings")
+          const householdDocRef = doc(db, "households", householdDocId)
+          const householdDocSnap = await getDoc(householdDocRef)
+          if (householdDocSnap.exists()) {
+            const data = householdDocSnap.data() as HouseholdData
+            setHouseholdData(data)
+            setIsOwner(data.created_by === user?.uid) // <-- note the optional chaining here in case user is null
+          }
+        } catch (error) {
+          console.error("Error fetching household data", error)
+        }
+      }
+    }
+
+    fetchHouseholdData()
+  }, [householdDocId, user])
 
   const handleDeleteHousehold = async () => {
     setShowModal(true)
@@ -157,7 +168,7 @@ export default function Settings() {
             <div className="truncate font-normal">{user?.email}</div>
           </div>
         </div>
-        {householdData && (
+        {!loading && householdData ? (
           <div className="bg-gray-200 p-6 mx-4 mt-6 rounded-lg shadow-md md:mx-auto md:max-w-md">
             <div className="bg-gray-100 p-4 rounded-lg mb-6">
               <p className="text-xl text-center font-semibold pb-4">
@@ -236,14 +247,14 @@ export default function Settings() {
                 </div>
               </div>
               {/* Delete Household Card */}
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="font-semibold text-lg mb-2 text-center">
-                  Delete Household
-                </p>
-                <p className="text-gray-600 text-center mb-4">
-                  This deletes the household and all the data inside.
-                </p>
-                {isOwner && (
+              {isOwner && (
+                <div className="bg-gray-100 p-4 rounded-lg">
+                  <p className="font-semibold text-lg mb-2 text-center">
+                    Delete Household
+                  </p>
+                  <p className="text-gray-600 text-center mb-4">
+                    This deletes the household and all the data inside.
+                  </p>
                   <div className="mb-6 text-center">
                     <button
                       onClick={handleDeleteHousehold}
@@ -252,10 +263,23 @@ export default function Settings() {
                       Delete Household
                     </button>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </section>
           </div>
+        ) : (
+          <>
+            <div className="flex justify-center">
+              <div
+                className="text-white inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status"
+              >
+                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                  Loading...
+                </span>
+              </div>
+            </div>
+          </>
         )}
       </main>
     </ProtectedPage>
