@@ -14,6 +14,7 @@ interface HouseholdData {
   created_by: string
   members: {
     uid: string
+    email: string
     name: string
     nickname: string
     role: string
@@ -209,12 +210,12 @@ export default function Settings() {
               {/* Members Card */}
               <div className="bg-gray-100 p-4 rounded-lg">
                 <p className="font-semibold text-lg mb-2 text-center">
-                  Members
+                  Members ({householdData.members.length})
                 </p>
                 <p className="text-gray-600 text-center mb-4">
                   The members currently in your household.
                 </p>
-                <div>
+                <div className="space-y-4">
                   {householdData.members.map((member, index) => (
                     <div
                       key={index}
@@ -222,10 +223,10 @@ export default function Settings() {
                     >
                       <p className="text-xl font-semibold">{member.name}</p>
                       <p className="font-normal text-gray-700 text-md">
-                        nickname: {member.nickname}
+                        Email: {member.email}
                       </p>
                       <p className="font-normal text-gray-700 text-md">
-                        email: member-email
+                        Nickname: {member.nickname}
                       </p>
                       <p className="text-white text-sm font-normal bg-blue-500 rounded-full w-fit px-3">
                         {member.role}

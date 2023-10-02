@@ -7,6 +7,7 @@ import { useFirebase } from "../FirebaseContext"
 import { db } from "../firebase"
 import Alert from "../components/Alert"
 import { BsFillPersonFill, BsPeopleFill } from "react-icons/bs"
+import JoinHousehold from "../components/JoinHousehold"
 
 interface Data {
   householdName: string
@@ -14,6 +15,7 @@ interface Data {
   created_by: string
   members: {
     uid: string
+    email: string
     name: string
     nickname: string
     role: string
@@ -45,10 +47,6 @@ export default function HouseHold() {
             const householdId = userData?.householdId || ""
 
             setUserHouseholdId(householdId)
-
-            // Fetch the household data using the householdId
-            const householdDocRef = doc(db, "households", householdId)
-            const householdDocSnap = await getDoc(householdDocRef)
 
             if (!householdId) {
               setShowCreateHousehold(true)
@@ -120,6 +118,7 @@ export default function HouseHold() {
                   onUpdateHouseholdId={updateUserHouseholdId}
                   setCreateHouseholdAlert={setCreateHouseholdAlert}
                 />
+                <JoinHousehold onUpdateHouseholdId={updateUserHouseholdId} />
               </>
             )}
             {userHouseholdId && data && (

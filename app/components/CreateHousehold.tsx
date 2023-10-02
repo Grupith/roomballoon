@@ -9,7 +9,6 @@ import {
 import React, { useState, Dispatch, SetStateAction } from "react"
 import { db } from "../firebase"
 import { useFirebase } from "../FirebaseContext"
-import Alert from "./Alert"
 
 interface CreateHouseholdProps {
   onUpdateHouseholdId: (householdId: string) => void
@@ -36,11 +35,11 @@ export default function CreateHousehold({
         members: [
           {
             name: user?.displayName,
+            email: user?.email,
             uid: user?.uid,
             nickname: nickname,
             role: "Owner",
           },
-          // Add other members if needed
         ],
       })
       if (user) {
@@ -69,7 +68,7 @@ export default function CreateHousehold({
 
   return (
     <div className="bg-gray-200 rounded-lg shadow-lg p-6 mx-4 mt-4 md:mx-auto md:max-w-md">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+      <h2 className="text-3xl font-semibold text-gray-800 mb-4">
         Create Household
       </h2>
       <form onSubmit={handleSubmit}>
