@@ -59,7 +59,7 @@ export default function Navbar() {
             height={35}
             width={35}
           />
-          <h1 className="font-semibold">RoomBalloon</h1>
+          {!user && <h1 className="font-semibold">RoomBalloon</h1>}
         </Link>
         {/* Mobile Menu Icon */}
         <div className="flex items-center sm:hidden">

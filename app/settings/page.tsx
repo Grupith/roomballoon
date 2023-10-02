@@ -222,7 +222,10 @@ export default function Settings() {
                     >
                       <p className="text-xl font-semibold">{member.name}</p>
                       <p className="font-normal text-gray-700 text-md">
-                        Nickname: {member.nickname}
+                        nickname: {member.nickname}
+                      </p>
+                      <p className="font-normal text-gray-700 text-md">
+                        email: member-email
                       </p>
                       <p className="text-white text-sm font-normal bg-blue-500 rounded-full w-fit px-3">
                         {member.role}
