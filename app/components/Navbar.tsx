@@ -58,6 +58,7 @@ export default function Navbar() {
             alt="Balloon Logo"
             height={35}
             width={35}
+            priority
           />
           {!user && <h1 className="font-semibold">RoomBalloon</h1>}
         </Link>

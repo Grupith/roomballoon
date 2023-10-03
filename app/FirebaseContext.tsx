@@ -4,11 +4,13 @@ import { User, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 import { auth, db } from "./firebase"
 import { useRouter } from "next/navigation"
 import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore"
+import LoadingSpinner from "./components/LoadingSpinner"
 
 interface AuthContextProps {
   user: User | null
   signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
+  loading: boolean
 }
 
 const FirebaseContext = createContext<AuthContextProps | undefined>(undefined)
@@ -23,12 +25,14 @@ export function useFirebase() {
 
 export function FirebaseProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser)
+
         // Check if the user document exists in database
         const CheckUserExists = async () => {
           const userDocRef = doc(db, "users", authUser.uid)
@@ -50,6 +54,7 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
       } else {
         setUser(null)
       }
+      setLoading(false)
     })
 
     return () => unsubscribe()
@@ -73,11 +78,12 @@ export function FirebaseProvider({ children }: { children: React.ReactNode }) {
     user,
     signInWithGoogle,
     signOut,
+    loading,
   }
 
   return (
     <FirebaseContext.Provider value={value}>
-      {children}
+      {loading ? <LoadingSpinner /> : children}
     </FirebaseContext.Provider>
   )
 }

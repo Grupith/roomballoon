@@ -13,15 +13,10 @@ const ProtectedPage: React.FC<ProtectedPageProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true) // Loading state
 
   useEffect(() => {
-    if (user !== null) {
-      // Check if user data has been fetched
-      setIsLoading(false)
-      console.log(user)
-      if (!user) {
-        // If user is not signed in, redirect to Landing page
-        router.push("/")
-      }
+    if (!user) {
+      router.push("/")
     }
+    setIsLoading(false)
   }, [user, router])
 
   return (
